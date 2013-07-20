@@ -3,6 +3,7 @@
  */
 
 var express = require('express')
+  , MongoClient = require('mongodb').MongoClient
   , config = require('./app/config.json')
   , books = require('./app/modules/books')
   , categories = require('./app/modules/categories')
@@ -28,6 +29,14 @@ if ('development' == app.get('env')) {
 app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+MongoClient.connect( 'mongodb://' + config.db.user + ':' + config.db.password + '@' + config.db.server + ':' + config.db.port + '/' + config.db.db, function( err, db ) {
+  if( !err ) {
+    console.log( 'Connected to ' + config.db.server + ', using ' + config.db.db )
+  } else {
+    console.dir( err );
+  }
+} );
 
 app.get('/', books.list);
 
