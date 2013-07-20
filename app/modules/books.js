@@ -1,8 +1,6 @@
 /*
  * Books
  */
-var db = require( './db' );
-
 exports.list = function(req, res){
   res.send(200, 'Books');
 };
