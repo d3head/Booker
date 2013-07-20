@@ -1,9 +1,12 @@
-var MongoClient = require( 'mongodb' ).MongoClient
+var mongoDB = require( 'mongodb' ).Db
+  , mongoServer = require( 'mongodb' ).Server
   , config = require( './app/config.json' );
 
-MongoClient.connect( 'mongodb://' + config.db.server + ':' + config.db.port + '/' + config.db.db, function( err, db ) {
+var db = new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) );
+
+db.open( function( err, result ) {
   if( !err ) {
-    console.log( 'Connected to ' + config.db.server + ', using ' + config.db.db )
+    console.log( 'Connected to ' + config.db.server + ', using database ' + config.db.db )
   } else {
     console.dir( err );
   }
