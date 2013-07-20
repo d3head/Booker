@@ -1,7 +1,7 @@
 var MongoClient = require( 'mongodb' ).MongoClient
   , config = require( './app/config.json' );
 
-MongoClient.connect( 'mongodb://' + config.db.user + ':' + config.db.password + '@' + config.db.server + ':' + config.db.port + '/' + config.db.db, function( err, db ) {
+MongoClient.connect( 'mongodb://' + config.db.server + ':' + config.db.port + '/' + config.db.db, function( err, db ) {
   if( !err ) {
     console.log( 'Connected to ' + config.db.server + ', using ' + config.db.db )
   } else {

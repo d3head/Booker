@@ -1,12 +1,10 @@
 {
   "server": {
-    "port": "1337"
+    "port": 80
   },
   "db": {
     "server": "localhost",
-    "port": 80,
-    "user": "user",
-    "password": "password",
+    "port": 27017,
     "db": "database"
   }
 }
