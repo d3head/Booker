@@ -5,7 +5,7 @@ module.exports = function( db ) {
   return {
     list: function( req, res ){
       db.collection('books').find().toArray(function(err, items) {
-		if( !err ) {
+		if( items ) {
 			res.send(200, items);
 		} else {
 			res.send(204, {'description':'Empty'});
@@ -15,7 +15,7 @@ module.exports = function( db ) {
 
     view: function( req, res ){
       db.collection('books').find({'author' : req.params['id']}).toArray(function(err, items) {
-        if( !err ) {
+        if( items ) {
 			res.send(200, items);
 		} else {
 			res.send(204, {'description':'Author not found'});
