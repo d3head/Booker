@@ -8,7 +8,7 @@ exports.list = function(req, res){
 };
 
 exports.view = function(req, res){
-	res.send(200, 'Authors');
-
-	db.collection('books').find({'author' : req.params[0]});
+	db.collection('books').find({'author' : req.params[0]}).toArray(function(err, items) {
+		res.send(200, 'Authors' + items);
+	});	
 };
