@@ -15,22 +15,23 @@ var books = require( './app/modules/books' )( db )
   , authors = require( './app/modules/authors' )( db );
 
 // all environments
-app.set('port', process.env.PORT || config.server.port);
+app.set( 'port', process.env.PORT || config.server.port );
+app.set( 'env', config.server.env );
 
 // gzip
-app.use(express.logger());
-app.use(express.compress());
-app.use(express.methodOverride());
-app.use(express.bodyParser());
+app.use( express.logger( ) );
+app.use( express.compress( ) );
+app.use( express.methodOverride( ) );
+app.use( express.bodyParser( ) );
 
 // development only
-if ('development' == app.get('env')) {
-	app.use(express.errorHandler());
-	app.use(express.logger('dev'));
+if ( 'development' == app.get( 'env' ) ) {
+	app.use( express.errorHandler( ) );
+	app.use( express.logger( 'dev' ) );
 }
 
-app.listen(app.get('port'), function() {
-	console.log('Express server listening on port ' + app.get('port'));
+app.listen( app.get( 'port' ), function( ) {
+	console.log( 'Express server listening on port ' + app.get( 'port' ) );
 });
 
 db.open( function( err, result ) {
@@ -41,16 +42,16 @@ db.open( function( err, result ) {
   }
 } );
 
-app.get('/', books.list);
+app.get( '/', books.list );
 
-app.get('/books', books.list);
-// app.post('/books', books.create);
-app.get('/books/:id', books.view);
-// app.put('/books/:id', books.edit);
-// app.del('/books/:id', books.delete);
+app.get( '/books', books.list );
+app.post( '/books', books.create );
+app.get( '/books/:id', books.view );
+app.put( '/books/:id', books.edit );
+app.del( '/books/:id', books.delete );
 
-app.get('/categories', categories.list);
-app.get('/categories/:name', categories.view);
+app.get( '/categories', books.list );
+app.get( '/categories/:name', categories.view );
 
-app.get('/authors', books.list);
-app.get('/authors/:id', authors.view);
+app.get( '/authors', books.list );
+app.get( '/authors/:name', authors.view );

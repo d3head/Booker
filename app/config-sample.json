@@ -1,10 +1,12 @@
 {
   "server": {
-    "port": 80
+    "port": 1337,
+    "env": "development"
   },
+
   "db": {
     "server": "localhost",
     "port": 27017,
-    "db": "database"
+    "db": "booker"
   }
 }

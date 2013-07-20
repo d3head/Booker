@@ -1,33 +1,18 @@
-// /*
-//  * Categories
-//  */
-// exports.list = function(req, res){
-// 	res.send(200, 'Categories');
-
-// 	db.collection('books').find().toArray(function(err, items) {});
-// };
-
-// exports.view = function(req, res){
-// 	res.send(200, 'Categories');
-
-// 	db.collection('books').find({'category' : req.params[0]});
-// };
-
 /*
  * Categories
  */
 module.exports = function( db ) {
   return {
-    list: function( req, res ){
-      res.send(200, 'Categories');
+    view: function( req, res ) {
+      db.collection( 'books' ).find( { 'category' : req.params[ 'name' ] } ).toArray( function( err, items ) {
 
-      db.collection('books').find().toArray(function(err, items) {});
-    },
+        if( items.length > 0 ) {
+          res.send( 200, items );
+        } else {
+          res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Author not found' } );
+        }
 
-    view: function( req, res ){
-      db.collection('books').find({'author' : req.params[0]}).toArray(function(err, items) {
-        res.send(200, 'Categories' + items);
-      }); 
-    },
+      });
+    }, 
   }
 }
