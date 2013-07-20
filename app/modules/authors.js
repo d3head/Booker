@@ -13,7 +13,7 @@ module.exports = function( db ) {
       /*db.collection('books').find({'author' : req.params[0]}).toArray(function(err, items) {
         res.send(200, items);
       }); */
-	   res.send(200, req.params[0]);
+	   res.send(200, req.params[1]);
     }, 
   }
 }
