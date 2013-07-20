@@ -46,7 +46,7 @@ app.get( '/', books.list );
 
 app.get( '/books', books.list );
 app.post( '/books', books.create );
-app.get( '/books/:id', books.view );
+app.get( '/books/:name', books.view );
 app.put( '/books/:id', books.edit );
 app.del( '/books/:id', books.delete );
 
