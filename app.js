@@ -52,5 +52,5 @@ app.get('/books/:id', books.view);
 app.get('/categories', categories.list);
 app.get('/categories/:name', categories.view);
 
-app.get('/authors', authors.list);
+app.get('/authors', books.list);
 app.get('/authors/:id', authors.view);
