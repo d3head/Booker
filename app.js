@@ -29,6 +29,8 @@ app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+app.get('/', books.list);
+
 app.get('/books', books.list);
 app.post('/books', books.create);
 app.get('/books/:id', books.view);

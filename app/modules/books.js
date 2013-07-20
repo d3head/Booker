@@ -4,21 +4,21 @@
 var db = require( './db' );
 
 exports.list = function(req, res){
-  res.render('Books');
+  res.send(200, 'Books');
 };
 
 exports.create = function(req, res){
-  res.render('Books');
+  res.send(200, 'Books');
 };
 
 exports.view = function(req, res){
-  res.render('Books');
+  res.send(200, 'Books');
 };
 
 exports.edit = function(req, res){
-  res.render('Books');
+  res.send(200, 'Books');
 };
 
 exports.delete = function(req, res){
-  res.render('Books');
+  res.send(200, 'Books');
 };
