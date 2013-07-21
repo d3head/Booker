@@ -1,10 +1,15 @@
 Booker
 =========
+Book library service.
+RESTful backend.
 
-Библиотека книг. Бэкэнд.
+## Installation
+1. Install modules via `npm install`
+2. Copy `app/config-sample.json` and rename it to `app/config.json`, setup using your data.
+3. Run install script `node install.js`
+4. Run application: `node app.js`
+5. Then check repository [theaqua/frontend](../../tree/frontend)
 
-## Установка
-
-1. Установить модули через **npm install**
-2. Переименовать **app/config-sample.json** в **/app/config.json**, настроить
-3. Запустить приложение: **node app.js**
+## Authors
+* Eugene “theaqua” Rodionov
+* Oleg “d3head”
