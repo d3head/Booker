@@ -17,8 +17,18 @@ db.open( function( err, result ) {
     }
   } );
 
-  var sampleBook = { title: 'Dune', author: 'Frank Herbert', description: 'Follows the adventures of Paul Atreides, the son of a betrayed duke given up for dead on a treacherous desert planet and adopted by its fierce, nomadic people, who help him unravel his most unexpected destiny', isbn: '0441013597', language: 'en' },
-      collection = db.collection( 'books' );
+  var sampleBook = { 
+      id: 'Dune',
+      title: 'Dune',
+      author: 'Frank Herbert',
+      description: 'Follows the adventures of Paul Atreides, the son of a betrayed duke given up for dead on a treacherous desert planet and adopted by its fierce, nomadic people, who help him unravel his most unexpected destiny', isbn: '0441013597',
+      language: 'en',
+      tags: [ 'thriller', 'adventure' ],
+      links: [ 
+        { 'link': '/download/Dune/epub', type: 'epub' },
+        { 'link': '/download/Dune/pdf', type: 'pdf' }
+      ] },
+    collection = db.collection( 'books' );
 
   // if( collection.find( { title: sampleBook.title } ) === false ) {
     collection.save( sampleBook, { w: 1 }, function( err, result ) {

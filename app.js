@@ -42,6 +42,12 @@ db.open( function( err, result ) {
   }
 } );
 
+app.all( '/', function( req, res, next ) {
+  res.header( "Access-Control-Allow-Origin", "*" );
+  res.header( "Access-Control-Allow-Headers", "X-Requested-With" );
+  next( );
+});
+
 app.get( '/', books.list );
 
 app.get( '/books', books.list );
