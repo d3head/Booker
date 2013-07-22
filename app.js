@@ -2,17 +2,19 @@
  * Module dependencies.
  */
 
-var express = require( 'express' )
-  , mongoDB = require( 'mongodb' ).Db
-  , mongoServer = require( 'mongodb' ).Server
-  , config = require( './app/config.json' );
+var express				= require( 'express' )
+  , mongoDB				= require( 'mongodb' ).Db
+  , mongoServer		= require( 'mongodb' ).Server
+  , config 				= require( './app/config.json' );
 
-var app = express(),
-    db = new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) );
+var app 	= express()
+	, db 		= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) )
+	, utils = require( './app/modules/utils' );
 
-var books = require( './app/modules/books' )( db )
-  , categories = require( './app/modules/categories' )( db )
-  , authors = require( './app/modules/authors' )( db );
+var books 			= require( './app/modules/books' )( db )
+  , categories	= require( './app/modules/categories' )( db )
+  , authors			= require( './app/modules/authors' )( db )
+	, stats				= require( './app/modules/stats' )( db );
 
 // all environments
 app.set( 'port', process.env.PORT || config.server.port );
@@ -61,3 +63,5 @@ app.get( '/categories/:name', categories.view );
 
 app.get( '/authors', books.list );
 app.get( '/authors/:name', authors.view );
+
+app.get( '/stats', stats.get );
