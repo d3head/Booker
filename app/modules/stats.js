@@ -8,17 +8,17 @@ module.exports = function( db ) {
   return {
     get: function( req, res ) {
 		
-			var added				= new Date(),
-          books,
+			var result = { },
+          today = new Date(),
+          addedToday,
           authors,
           tags;
-    		  //	today				= db.collection( 'books' ).find( { 'added': added } ),    			
 
       db.collection( 'books' ).count( function( err, count ) {
-        books = count;
-
-        res.send( 200, { /* 'today': today, */ 'books': books, 'authors': authors, 'tags': tags } );
+        result.books = count;
       } )
+
+      console.log( result );
     }, 
   }
 }
