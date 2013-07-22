@@ -2,19 +2,19 @@
  * Module dependencies.
  */
 
-var express				= require( 'express' )
-  , mongoDB				= require( 'mongodb' ).Db
-  , mongoServer		= require( 'mongodb' ).Server
-  , config 				= require( './app/config.json' );
+var express	= require( 'express' )
+  , mongoDB	= require( 'mongodb' ).Db
+  , mongoServer	= require( 'mongodb' ).Server
+  , config = require( './app/config.json' );
 
-var app 	= express()
-	, db 		= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) )
-	, utils = require( './app/modules/utils' );
+var app	= express()
+	, db	= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) )
+	, utils	= require( './app/modules/utils' );
 
-var books 			= require( './app/modules/books' )( db )
+var books	= require( './app/modules/books' )( db )
   , categories	= require( './app/modules/categories' )( db )
-  , authors			= require( './app/modules/authors' )( db )
-	, stats				= require( './app/modules/stats' )( db );
+  , authors	= require( './app/modules/authors' )( db )
+	, stats	= require( './app/modules/stats' )( db );
 
 // all environments
 app.set( 'port', process.env.PORT || config.server.port );
