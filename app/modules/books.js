@@ -25,7 +25,7 @@ module.exports = function( db ) {
           category: request.category
         } );
 
-        res.send( 201, { 'status': 'ok', 'code': '201', 'description': 'Book ' + request.title + ' now available on /books/' + request.title } )
+        res.send( 201, { 'status': 'ok', 'code': '201', 'description': 'Book ' + request.title + ' now available on /books/' + request.title } );
 
       } else if( !request.title ) {
         res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed title' } );
@@ -64,7 +64,7 @@ module.exports = function( db ) {
           category: request.category
         } );
 
-        res.send( 201, { 'status': 'ok', 'code': '200', 'description': 'Updated book ' + request.title + ' now available on /books/' + request.title } )
+        res.send( 201, { 'status': 'ok', 'code': '200', 'description': 'Updated book ' + request.title + ' now available on /books/' + request.title } );
       } else if( !request.old ) {
         res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed query' } );
       } else if( !request.title ) {
@@ -86,7 +86,7 @@ module.exports = function( db ) {
           title: title
         } );
 
-        res.send( 201, { 'status': 'ok', 'code': '200', 'description': 'Book ' + title + ' removed' } )
+        res.send( 201, { 'status': 'ok', 'code': '200', 'description': 'Book ' + title + ' removed' } );
       } else if( !title ) {
         res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed title or id' } );
       }
