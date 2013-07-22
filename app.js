@@ -8,8 +8,7 @@ var express	= require( 'express' )
   , config = require( './app/config.json' );
 
 var app	= express()
-	, db	= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) )
-	, utils	= require( './app/modules/utils' );
+	, db	= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) );
 
 var books	= require( './app/modules/books' )( db )
   , categories	= require( './app/modules/categories' )( db )
