@@ -9,12 +9,16 @@ module.exports = function( db ) {
     get: function( req, res ) {
 		
 			var added				= new Date(),
-    			today				= db.collection( 'books' ).find( { 'added': added } ).count(),
-    			books 			= db.collection( 'books' ).count(function(err, count){}),
-    			authors 		= null,
-    			tags				= null;
-			
-      res.send( 200, { 'today': today, 'books': books, 'authors': authors, 'tags': tags } );
+          books,
+          authors,
+          tags;
+    		  //	today				= db.collection( 'books' ).find( { 'added': added } ),    			
+
+      db.collection( 'books' ).count( function( err, count ) {
+        books = count;
+
+        res.send( 200, { /* 'today': today, */ 'books': books, 'authors': authors, 'tags': tags } );
+      } )
     }, 
   }
 }
