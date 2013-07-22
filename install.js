@@ -23,6 +23,7 @@ db.open( function( err, result ) {
       author: 'Frank Herbert',
       description: 'Follows the adventures of Paul Atreides, the son of a betrayed duke given up for dead on a treacherous desert planet and adopted by its fierce, nomadic people, who help him unravel his most unexpected destiny', isbn: '0441013597',
       language: 'en',
+      color: '#e74c3c',
       tags: [ 'thriller', 'adventure' ],
       links: [ 
         { 'link': '/download/Dune/epub', type: 'epub' },
