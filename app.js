@@ -8,7 +8,7 @@ var express	= require( 'express' )
   , config = require( './app/config.json' );
 
 var app	= express()
-	, db	= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ) );
+	, db	= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ), { w: 1 } );
 
 var books	= require( './app/modules/books' )( db )
   , categories	= require( './app/modules/categories' )( db )
@@ -37,10 +37,14 @@ app.listen( app.get( 'port' ), function( ) {
 
 db.open( function( err, result ) {
   if( !err ) {
-    console.log( 'Connected to ' + config.db.server + ', using database ' + config.db.db )
+    console.log( 'Connect opened to ' + config.db.server + ', using database ' + config.db.db )
   } else {
     console.dir( err );
   }
+} );
+
+db.on( 'close', function( err, result ) {
+  console.log( 'Connection to database was closed' );
 } );
 
 app.all( '/', function( req, res, next ) {
