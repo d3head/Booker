@@ -24,6 +24,7 @@ module.exports = function( db ) {
       } );
 
       console.log( result );
+      res.send( 200, result );
     }, 
   }
 }
