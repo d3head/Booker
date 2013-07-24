@@ -16,7 +16,11 @@ module.exports = function( db ) {
 
       db.collection( 'books' ).count( function( err, count ) {
         result.books = count;
-      } )
+      } );
+      
+      db.collection( 'books' ).find( { 'added': addedToday} ).count( function( err, count ) {
+        result.added = count;
+      } );
 
       console.log( result );
     }, 
