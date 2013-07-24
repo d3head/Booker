@@ -8,7 +8,7 @@ module.exports = function( db ) {
   return {
     get: function( req, res ) {
 		
-			var result = { },
+			var result = [ ],
           today = new Date(),
           addedToday,
           authors,
@@ -16,11 +16,11 @@ module.exports = function( db ) {
           books;
 
       db.collection( 'books' ).count( function( err, count ) {
-        result.books = count;
+        result['books'] = count;
       } );
       
       db.collection( 'books' ).find( { 'added': today} ).count( function( err, count ) {
-        result.addedToday = count;
+        result['addedToday'] = count;
       } );
 
       console.log( result );
