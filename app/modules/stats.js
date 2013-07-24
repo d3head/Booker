@@ -14,8 +14,8 @@ module.exports = function( db ) {
         result.books = count;
         
         db.collection( 'books' ).find( { 'added': today } ).count( function( err, count ) {
-                result.addedToday = count;
-                res.send( 200, result );
+          result.addedToday = count;
+          res.send( 200, result );
         } );
       } );
     }
