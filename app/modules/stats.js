@@ -16,7 +16,7 @@ module.exports = function( db ) {
         db.collection( 'books' ).find( { 'added': today } ).count( function( err, count ) {
           result.addedToday = count;
           
-          db.runCommand ( { distinct: "books", key: "authors" } ).count( function( err, count ) {
+          db.collection( 'books' ).distinct ( 'author' ).count( function( err, count ) {
             result.authors = count;
             
             res.send( 200, result );
