@@ -7,16 +7,16 @@ var utils = require( './utils' );;
 module.exports = function( db ) {
   return {
     get: function( req, res ) {
-      db.collection( 'books' ).count( function( err, count ) {
+      db.books.count( function( err, count ) {
         var result = { },
             today = new Date();
             
         result.books = count;
         
-        db.collection( 'books' ).find( { 'added': today } ).count( function( err, count ) {
+        db.books.find( { 'added': today } ).count( function( err, count ) {
           result.addedToday = count;
           
-          db.collection( 'books' ).distinct( 'author' ).count( function( err, count ) {
+          db.books.distinct( 'author' ).count( function( err, count ) {
             result.authors = count;
             
             res.send( 200, result );
