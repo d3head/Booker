@@ -19,7 +19,11 @@ module.exports = function( db ) {
           db.collection( 'books' ).distinct( 'author', {}, function( err, count ) {
             result.authors = count.length;
             
-            res.send( 200, result );
+            db.collection( 'tags' ).count( function( err, count ) {
+              result.tags = count;
+              
+              res.send( 200, result );
+            } );
           } );
         } );
       } );

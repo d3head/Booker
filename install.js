@@ -31,8 +31,26 @@ db.open( function( err, result ) {
       ] },
     collection = db.collection( 'books' );
 
-  // if( collection.find( { title: sampleBook.title } ) === false ) {
     collection.save( sampleBook, { w: 1 }, function( err, result ) {
+      if( !err ) {
+       console.dir( err );
+      }
+    } );
+    
+  db.createCollection( 'tags', { w: 1 }, function( err, collection ) { 
+    if( !err ) {
+     console.dir( err );
+    }
+  } );
+  
+  var sampleTag = { 
+      title: 'adventure',
+      alias: [ { 'ru': 'адвентура' } ],
+      books: '1'
+      },
+    collection = db.collection( 'tags' );
+
+    collection.save( sampleTag, { w: 1 }, function( err, result ) {
       if( !err ) {
        console.dir( err );
       }
