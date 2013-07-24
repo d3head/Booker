@@ -15,7 +15,12 @@ module.exports = function( db ) {
         
         db.collection( 'books' ).find( { 'added': today } ).count( function( err, count ) {
           result.addedToday = count;
-          res.send( 200, result );
+          
+          db.runCommand ( { distinct: "books", key: "authors" } ).count( function( err, count ) {
+            result.authors = count;
+            
+            res.send( 200, result );
+          } );
         } );
       } );
     }
