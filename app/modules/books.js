@@ -27,7 +27,7 @@ module.exports = function( db ) {
         } );
 				
       for( var i = 0; i < request.tags.length; i++ ) {
-          db.collection( 'tags' ).find( title : request.tags[i] ).toArray( function( err, items ) {
+          db.collection( 'tags' ).find( { 'title' : request.tags[i] } ).toArray( function( err, items ) {
           if( items.length > 0 ) {
             db.collection( 'tags' ).update( { 
               title: request.tags[i]
@@ -86,7 +86,7 @@ module.exports = function( db ) {
         } );
 				
         for( var i = 0; i < request.tags.length; i++ ) {
-          db.collection( 'tags' ).find( title : request.tags[i] ).toArray( function( err, items ) {
+          db.collection( 'tags' ).find( { 'title' : request.tags[i] } ).toArray( function( err, items ) {
             if( items.length > 0 ) {
               db.collection( 'tags' ).update( { 
                 title: request.tags[i]
@@ -128,7 +128,7 @@ module.exports = function( db ) {
 				
       db.collection( 'books' ).find( { '_id': title } ).distinct( 'tags', {}, function( err, tags ) {
         for( var i = 0; i < tags.length; i++ ) {
-          db.collection( 'tags' ).find( title : tags[i] ).toArray( function( err, items ) {
+          db.collection( 'tags' ).find( { 'title' : tags[i] } ).toArray( function( err, items ) {
             if( items.length > 0 ) {
               db.collection( 'tags' ).update( { 
                 title: tags[i]
