@@ -27,20 +27,20 @@ module.exports = function( db ) {
         } );
 				
       for( var i = 0; i < request.tags.length; i++ ) {
-          db.collection( 'tags' ).find( { 'title' : request.tags[i] } ).toArray( function( err, items ) {
+        db.collection( 'tags' ).find( { 'title' : request.tags[i] } ).toArray( function( err, items ) {
           if( items.length > 0 ) {
-            db.collection( 'tags' ).update( { 
-              title: request.tags[i]
-            }, {
-              $inc: { books : 1 }
-            } );
+          db.collection( 'tags' ).update( { 
+          title: request.tags[i]
+          }, {
+          $inc: { books : 1 }
+          } );
           } else {
-            db.collection( 'tags' ).save( {
-              title: request.tags[i],
-              books: 1
-            } );
+          db.collection( 'tags' ).save( {
+          title: request.tags[i],
+          books: 1
+          } );
           }
-        }						
+        }	);			
       }
 
         res.send( 201, { 'status': 'ok', 'code': '201', 'description': 'Book ' + request.title + ' now available on /books/' + request.title } );
@@ -99,7 +99,7 @@ module.exports = function( db ) {
                 books: 1
               } );
             }
-          }						
+          }	);			
         }
 
         res.send( 201, { 'status': 'ok', 'code': '200', 'description': 'Updated book ' + request.title + ' now available on /books/' + request.title } );
@@ -126,19 +126,19 @@ module.exports = function( db ) {
           _id: title
         } );
 				
-      db.collection( 'books' ).find( { '_id': title } ).distinct( 'tags', {}, function( err, tags ) {
-        for( var i = 0; i < tags.length; i++ ) {
-          db.collection( 'tags' ).find( { 'title' : tags[i] } ).toArray( function( err, items ) {
-            if( items.length > 0 ) {
-              db.collection( 'tags' ).update( { 
-                title: tags[i]
-              }, {
-                $inc: { books : -1 }
-              } );
-            }
-          }	);
-        }
-      }
+        db.collection( 'books' ).find( { '_id': title } ).distinct( 'tags', {}, function( err, tags ) {
+          for( var i = 0; i < tags.length; i++ ) {
+            db.collection( 'tags' ).find( { 'title' : tags[i] } ).toArray( function( err, items ) {
+              if( items.length > 0 ) {
+                db.collection( 'tags' ).update( { 
+                  title: tags[i]
+                }, {
+                  $inc: { books : -1 }
+                } );
+              }
+            }	);
+          }
+        } );
 
         res.send( 201, { 'status': 'ok', 'code': '200', 'description': 'Book ' + title + ' removed' } );
       } else if( !title ) {
