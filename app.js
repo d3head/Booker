@@ -47,6 +47,61 @@ db.on( 'close', function( err, result ) {
   console.log( 'Connection to database was closed' );
 } );
 
+app.all( '/', function( req, res, next ) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+} );
+
+app.all( '/books', function( req, res, next ) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+} );
+
+
+app.post( '/books', function( req, res, next ) {
+
+} );
+
+app.get( '/books/:name', function( req, res, next ) {
+ 
+} );
+
+app.put( '/books/:id', function( req, res, next ) {
+
+} );
+
+app.del( '/books/:id', function( req, res, next ) {
+
+} );
+
+app.all('/categories', function( req, res, next ) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+} );
+
+app.get( '/categories/:name', function( req, res, next ) {
+ 
+} );
+
+app.all('/authors', function( req, res, next ) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+} );
+
+app.get( '/authors/:name', function( req, res, next ) {
+
+} );
+
+app.all( '/stats', function( req, res, next ) {
+  res.header( "Access-Control-Allow-Origin", "*" );
+  res.header( "Access-Control-Allow-Headers", "X-Requested-With" );
+  next();
+} );
+
 app.get( '/', books.list );
 
 app.get( '/books', books.list );
