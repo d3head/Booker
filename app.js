@@ -66,7 +66,7 @@ app.del( '/books/:id', books.delete );
 app.get( '/categories', books.list );
 app.get( '/categories/:name', categories.view );
 
-app.get( '/authors', books.list );
+app.get( '/authors', authors.list );
 app.get( '/authors/:name', authors.view );
 
 app.get( '/stats', stats.get );
