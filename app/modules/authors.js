@@ -4,7 +4,7 @@
 module.exports = function( db ) {
   return {
     list: function( req, res ) {
-      db.collection( 'books' ).distinct( 'author', {}, function( err, items ) {
+      db.collection( 'books' ).distinct( 'author' ).toArray( function( err, items ) {
         if( items.length > 0 ) {
           res.send( 200, items );
         } else {
