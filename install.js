@@ -24,17 +24,18 @@ db.open( function( err, result ) {
   } );
 
   var sampleBook = { 
-    id: 'Dune',
-    title: 'Dune',
-    author: 'Frank Herbert',
-    description: 'Follows the adventures of Paul Atreides, the son of a betrayed duke given up for dead on a treacherous desert planet and adopted by its fierce, nomadic people, who help him unravel his most unexpected destiny', isbn: '0441013597',
-    language: 'en',
-    tags: [ 'thriller', 'adventure' ],
+    id: 'Steve Jobs',
+    title: 'Steve Jobs',
+    author: 'Уолтер Айзексон',
+    description: 'В основу этой биографии легли беседы с самим Стивом Джобсом, а также с его родственниками, друзьями, врагами, соперниками и коллегами. Джобс никак не контролировал автора. Он откровенно отвечал на все вопросы и ждал такой же честности от остальных. Это рассказ о жизни, полной падений и взлетов, о сильном человеке и талантливом бизнесмене, который одним из первых понял: чтобы добиться успеха в XXI веке, нужно соединить креативность и технологии.', 
+    isbn: '9785271393785',
+    language: 'ru',
+    tags: [ 'биография' ],
     links: [ 
-      { 'link': '/download/Dune/epub', type: 'epub' },
-      { 'link': '/download/Dune/pdf', type: 'pdf' }
+      { 'link': '/download/Steve Jobs/epub', type: 'epub' },
+      { 'link': '/download/Steve Jobs/fb2', type: 'fb2' }
     ],
-    color: '#e74c3c',
+    color: '#2980b9',
   },
   sampleTag = { 
     title: 'adventure',
