@@ -64,7 +64,7 @@ module.exports = function( db ) {
         if( items.length > 0 ) {
           res.send( 200, items );
         } else {
-          res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Author not found' } );
+          res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Books not found' } );
         }
 
       });
