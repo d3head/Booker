@@ -16,46 +16,48 @@ module.exports = function( db ) {
     create: function( req, res ) {
       var request = req.body;
 
-      if( request.title && request.description && request.author && request.category && request.tags ) {
-        db.collection( 'books' ).save( {
+      if( request.title && request.description && request.author && request.tags ) {
+        
+        var newBook = {
           _id: request.title,
           title: request.title,
           description: request.description,
           author: request.author,
-          category: request.category,
-					tags: request.tags
-        } );
+          tags: request.tags
+        }
 				
-      for( var i = 0; i < request.tags.length; i++ ) {
-        db.collection( 'tags' ).find( { 'title' : request.tags[i] } ).toArray( function( err, items ) {
-          if( items.length > 0 ) {
-          db.collection( 'tags' ).update( { 
-          title: request.tags[i]
-          }, {
-          $inc: { books : 1 }
-          } );
-          } else {
-          db.collection( 'tags' ).save( {
-          title: request.tags[i],
-          books: 1
-          } );
-          }
-        }	);			
-      }
-
-        res.send( 201, { 'status': 'ok', 'code': '201', 'description': 'Book ' + request.title + ' now available on /books/' + request.title } );
+				db.collection( 'books' ).insert( newBook, { safe: true }, function(err, records){
+				  console.log("Record added as "+records[0]._id);
+				
+          /*for( var i = 0; i < request.tags.length; i++ ) {
+            db.collection( 'tags' ).find( { 'title' : request.tags[i] } ).toArray( function( err, items ) {
+              if( items.length > 0 ) {
+                db.collection( 'tags' ).update( { 
+                  title: request.tags[i]
+                }, {
+                  $inc: { books : 1 }
+                } );
+              } else {
+                db.collection( 'tags' ).insert( {
+                  title: request.tags[i],
+                  books: 1
+                } );
+              }
+            }	);			
+          }*/
+      
+          res.send( 201, { 'status': 'ok', 'code': '201', 'description': 'Book ' + request.title + ' now available on /books/' + request.title } );
+        });
 
       } else if( !request.title ) {
-        res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed title' } );
+        res.send( 200, { 'status': 'error', 'code': '400', 'description': 'Missed title' } );
       } else if( !request.description ) {
-        res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed description' } );
+        res.send( 200, { 'status': 'error', 'code': '400', 'description': 'Missed description' } );
       } else if( !request.author ) {
-        res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed author' } );
-      } else if( !request.category ) {
-        res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed category' } );
+        res.send( 200, { 'status': 'error', 'code': '400', 'description': 'Missed author' } );
       } else if( !request.tags ) {
-        res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Missed tags' } );
-      } 
+        res.send( 200, { 'status': 'error', 'code': '400', 'description': 'Missed tags' } );
+      }
     },
 
     view: function( req, res ) {

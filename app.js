@@ -5,7 +5,8 @@
 var express	= require( 'express' )
   , mongoDB	= require( 'mongodb' ).Db
   , mongoServer	= require( 'mongodb' ).Server
-  , config = require( './app/config.json' );
+  , config = require( './app/config.json' )
+  , cors = require('cors');
 
 var app	= express()
 	, db	= new mongoDB( config.db.db, new mongoServer( config.db.server, config.db.port ), { w: 1 } );
@@ -18,6 +19,8 @@ var books	= require( './app/modules/books' )( db )
 // all environments
 app.set( 'port', process.env.PORT || config.server.port );
 app.set( 'env', config.server.env );
+
+app.use(cors());
 
 // gzip
 app.use( express.logger( ) );
@@ -48,17 +51,16 @@ db.on( 'close', function( err, result ) {
 } );
 
 app.all( '/*', function( req, res, next ) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin");
-  res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin, Content-Type");
+  res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, HEAD, OPTIONS");
   res.header("Access-Control-Allow-Credentials", true);
   next();
 } );
 
 app.get( '/', books.list );
-
-app.get( '/books', books.list );
 app.post( '/books', books.create );
+app.get( '/books', books.list );
 app.get( '/books/search', books.search );
 app.get( '/books/search/:name', books.search );
 app.get( '/books/:name', books.view );
