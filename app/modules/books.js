@@ -5,11 +5,11 @@ module.exports = function( db ) {
   return {
     list: function( req, res ) {
       db.collection( 'books' ).find( ).toArray( function( err, items ) {
-        if( items.length > 0 ) {
+        //if( items.length > 0 ) {
           res.send( 200, items );
-        } else {
-          res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Database is empty' } );
-        }
+        //} else {
+        //  res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Database is empty' } );
+        //}
       } );
     },
 
@@ -59,14 +59,26 @@ module.exports = function( db ) {
     },
 
     view: function( req, res ) {
-      db.collection( 'books' ).find( { 'title' : req.params[ 'name' ] } ).toArray( function( err, items ) {
+      db.collection( 'books' ).find( { 'title' : req.params[ 'name' ] } ).limit(1).toArray( function( err, items ) {
 
-        if( items.length > 0 ) {
+        //if( items.length > 0 ) {
           res.send( 200, items );
-        } else {
-          res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Books not found' } );
-        }
+        //} else {
+        //  res.send( 200, { 'status': 'error', 'code': '400', 'description': 'Book not found' } );
+        //}
 
+      });
+    },
+    
+    search: function( req, res ) {
+      var query = new RegExp( req.params[ 'name' ], "i" );
+      
+      db.collection( 'books' ).find( { 'title' : query } ).toArray( function( err, items_t ) {
+        db.collection( 'books' ).find( { 'author' : query } ).toArray( function( err, items_a ) {
+          db.collection( 'books' ).find( { 'tags' : query } ).toArray( function( err, items ) {
+            res.send( 200, items.concat(items_a, items_t) );
+          });
+        });
       });
     },
 

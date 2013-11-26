@@ -48,7 +48,7 @@ db.on( 'close', function( err, result ) {
 } );
 
 app.all( '/*', function( req, res, next ) {
-  res.header("Access-Control-Allow-Origin", "http://beta.booker.am");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin");
   res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Credentials", true);
@@ -59,6 +59,8 @@ app.get( '/', books.list );
 
 app.get( '/books', books.list );
 app.post( '/books', books.create );
+app.get( '/books/search', books.search );
+app.get( '/books/search/:name', books.search );
 app.get( '/books/:name', books.view );
 app.put( '/books/:id', books.edit );
 app.del( '/books/:id', books.delete );
