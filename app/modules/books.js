@@ -32,7 +32,20 @@ module.exports = function( db ) {
     },
 
     create: function( req, res ) {
-      var request = req.body;
+      var request = req.body,
+          colors = [
+            '#1abc9c',
+            '#2ecc71',
+            '#3498db',
+            '#9b59b6',
+            '#34495e',
+            '#f1c40f',
+            '#e67e22',
+            '#e74c3c',
+            '#ecf0f1',
+            '#95a5a6'
+          ],
+          coverColor = colors[Math.floor(Math.random()*colors.length)];
 
       if( request.title && request.description && request.author && request.tags ) {
         
@@ -44,13 +57,13 @@ module.exports = function( db ) {
           isbn: request.isbn,
           tags: request.tags,
           links: request.links,
+          color: coverColor,
           date: new Date()
         }
 				
 				db.collection( 'books' ).insert( newBook, { safe: true }, function(err, records){
-				  console.log("Record added as "+records[0]._id);
 				
-          /*for( var i = 0; i < request.tags.length; i++ ) {
+          for( var i = 0; i < request.tags.length; i++ ) {
             db.collection( 'tags' ).find( { 'title' : request.tags[i] } ).toArray( function( err, items ) {
               if( items.length > 0 ) {
                 db.collection( 'tags' ).update( { 
@@ -62,10 +75,10 @@ module.exports = function( db ) {
                 db.collection( 'tags' ).insert( {
                   title: request.tags[i],
                   books: 1
-                } );
+                }, function(err, records){} );
               }
             }	);			
-          }*/
+          }
       
           res.send( 201, { 'status': 'ok', 'code': '201', 'description': 'Book ' + request.title + ' now available on /books/' + request.title } );
         });
@@ -96,12 +109,8 @@ module.exports = function( db ) {
     search: function( req, res ) {
       var query = new RegExp( req.params[ 'name' ], "i" );
       
-      db.collection( 'books' ).find( { 'title' : query } ).sort( {date: -1} ).toArray( function( err, items_t ) {
-        db.collection( 'books' ).find( { 'author' : query } ).sort( {date: -1} ).toArray( function( err, items_a ) {
-          db.collection( 'books' ).find( { 'tags' : query } ).sort( {date: -1} ).toArray( function( err, items ) {
-            res.send( 200, items.concat(items_a, items_t) );
-          });
-        });
+      db.collection( 'books' ).find( { $or: [ { 'title' : query }, { 'tags' : query }, { 'author' : query } ] } ).sort( {date: -1} ).toArray( function( err, items ) {
+        res.send( 200,  items );
       });
     },
 
