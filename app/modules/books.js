@@ -4,13 +4,31 @@
 module.exports = function( db ) {
   return {
     list: function( req, res ) {
-      db.collection( 'books' ).find( ).toArray( function( err, items ) {
+      db.collection( 'books' ).find( ).sort( {date: -1} ).toArray( function( err, items ) {
         //if( items.length > 0 ) {
           res.send( 200, items );
         //} else {
         //  res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Database is empty' } );
         //}
       } );
+    },
+    
+    upload: function( req, res ) {
+      var request = req.files;
+      var format = request.file.name.split(".").pop();
+      var title = req.body.title + '.' + format;
+      
+      var serverPath = '/books/' + title;
+     
+      require('fs').rename(request.file.path, '/Users/d3head/Documents/Projects/Booker/' + serverPath, function(error) {
+          if(error) {
+            res.send( 200, { description: 'Ah crap! Something bad happened' } );
+            return;
+          }
+        
+        res.send( 201, { link: '/download/' + req.body.title + '/' + format, type: format } );
+        }
+      );
     },
 
     create: function( req, res ) {
@@ -19,11 +37,14 @@ module.exports = function( db ) {
       if( request.title && request.description && request.author && request.tags ) {
         
         var newBook = {
-          _id: request.title,
+          originaltitle: request.originaltitle,
           title: request.title,
           description: request.description,
           author: request.author,
-          tags: request.tags
+          isbn: request.isbn,
+          tags: request.tags,
+          links: request.links,
+          date: new Date()
         }
 				
 				db.collection( 'books' ).insert( newBook, { safe: true }, function(err, records){
@@ -75,9 +96,9 @@ module.exports = function( db ) {
     search: function( req, res ) {
       var query = new RegExp( req.params[ 'name' ], "i" );
       
-      db.collection( 'books' ).find( { 'title' : query } ).toArray( function( err, items_t ) {
-        db.collection( 'books' ).find( { 'author' : query } ).toArray( function( err, items_a ) {
-          db.collection( 'books' ).find( { 'tags' : query } ).toArray( function( err, items ) {
+      db.collection( 'books' ).find( { 'title' : query } ).sort( {date: -1} ).toArray( function( err, items_t ) {
+        db.collection( 'books' ).find( { 'author' : query } ).sort( {date: -1} ).toArray( function( err, items_a ) {
+          db.collection( 'books' ).find( { 'tags' : query } ).sort( {date: -1} ).toArray( function( err, items ) {
             res.send( 200, items.concat(items_a, items_t) );
           });
         });

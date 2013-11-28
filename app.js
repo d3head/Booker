@@ -60,6 +60,7 @@ app.all( '/*', function( req, res, next ) {
 
 app.get( '/', books.list );
 app.post( '/books', books.create );
+app.post( '/books/upload', books.upload );
 app.get( '/books', books.list );
 app.get( '/books/search', books.search );
 app.get( '/books/search/:name', books.search );
