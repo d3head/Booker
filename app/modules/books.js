@@ -4,13 +4,27 @@
 module.exports = function( db ) {
   return {
     list: function( req, res ) {
-      db.collection( 'books' ).find( ).sort( {date: -1} ).toArray( function( err, items ) {
+      var request = req.body
+        , q = parseInt(req.query.q);
+     
+      db.collection( 'books' ).find( ).limit( 12 ).skip( q ).sort( { date: -1 } ).toArray( function( err, items ) {
         //if( items.length > 0 ) {
+          console.log("."+q+".")
           res.send( 200, items );
         //} else {
         //  res.send( 400, { 'status': 'error', 'code': '400', 'description': 'Database is empty' } );
         //}
       } );
+    },
+    
+    search: function( req, res ) {
+      var query = new RegExp( req.params[ 'name' ], "i" )
+        , q = parseInt(req.query.q);
+      
+      db.collection( 'books' ).find( { $or: [ { 'title' : query }, { 'tags' : query }, { 'author' : query } ] } ).limit( 12 ).skip( q ).sort( {date: -1} ).toArray( function( err, items ) {
+        console.log(items)
+        res.send( 200,  items );
+      });
     },
     
     upload: function( req, res ) {
@@ -103,14 +117,6 @@ module.exports = function( db ) {
         //  res.send( 200, { 'status': 'error', 'code': '400', 'description': 'Book not found' } );
         //}
 
-      });
-    },
-    
-    search: function( req, res ) {
-      var query = new RegExp( req.params[ 'name' ], "i" );
-      
-      db.collection( 'books' ).find( { $or: [ { 'title' : query }, { 'tags' : query }, { 'author' : query } ] } ).sort( {date: -1} ).toArray( function( err, items ) {
-        res.send( 200,  items );
       });
     },
 
